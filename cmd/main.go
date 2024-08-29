@@ -7,6 +7,8 @@ import (
 
 	"github.com/gerardo02/practicando-mas/cmd/api"
 	"github.com/joho/godotenv"
+
+	_ "github.com/lib/pq"
 )
 
 func main() {

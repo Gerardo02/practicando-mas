@@ -5,12 +5,8 @@ import (
 	"log"
 	"net/http"
 
-	"github.com/gerardo02/practicando-mas/db"
 	"github.com/gerardo02/practicando-mas/handlers"
-	"github.com/gerardo02/practicando-mas/services"
 	"github.com/go-chi/chi/v5"
-
-	_ "github.com/lib/pq"
 )
 
 type APIServer struct {
@@ -26,13 +22,11 @@ func NewApiServer(addr string, conn *sql.DB) *APIServer {
 }
 
 func (api *APIServer) Run() error {
-	database := db.New(api.db)
 	router := chi.NewRouter()
 
 	v1Router := chi.NewRouter()
 
-	services := services.NewServices()
-	handlers := handlers.NewHandlers(services, database)
+	handlers := handlers.NewHandlers(api.db)
 
 	handlers.ManageRoutes(v1Router)
 
