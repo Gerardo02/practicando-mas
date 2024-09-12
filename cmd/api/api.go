@@ -5,9 +5,9 @@ import (
 	"log"
 	"net/http"
 
-	"github.com/go-chi/chi/v5"
-
 	"github.com/gerardo02/practicando-mas/handlers"
+	"github.com/go-chi/chi/v5"
+	"github.com/go-chi/cors"
 )
 
 type APIServer struct {
@@ -24,6 +24,15 @@ func NewApiServer(addr string, conn *sql.DB) *APIServer {
 
 func (api *APIServer) Run() error {
 	router := chi.NewRouter()
+	router.Use(cors.Handler(cors.Options{
+		AllowedOrigins:   []string{"https://*", "http://*"},
+		AllowedMethods:   []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"},
+		AllowedHeaders:   []string{"*"},
+		ExposedHeaders:   []string{"Link"},
+		AllowCredentials: true,
+		MaxAge:           300,
+	}))
+
 	v1Router := chi.NewRouter()
 
 	handlers := handlers.NewHandlers(api.db)
@@ -32,7 +41,7 @@ func (api *APIServer) Run() error {
 
 	router.Mount("/api/v1", v1Router)
 
-	log.Println("running server on 8080")
+	log.Println("test URL: http://localhost:8080/api/v1/auth/google")
 
 	return http.ListenAndServe(api.addr, router)
 }

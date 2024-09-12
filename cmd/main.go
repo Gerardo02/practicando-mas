@@ -26,8 +26,8 @@ func main() {
 
 	apiServer := api.NewApiServer(":8080", conn)
 	if err := apiServer.Run(); err != nil {
-		log.Fatal("errores locos")
+		log.Fatal(err)
 	}
 
-	log.Println("Listening on port 8080")
+	log.Println("Listening on port 8081")
 }

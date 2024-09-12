@@ -11,12 +11,21 @@ import (
 )
 
 type Order struct {
-	ID        uuid.UUID `json:"id"`
-	CreatedAt time.Time `json:"created_at"`
-	UpdatedAt time.Time `json:"updated_at"`
-	Users     string `json:"users"`
-	Total     string `json:"total"`
-	Discount  string `json:"discount"`
-	Payment   string `json:"payment"`
-	Shipping  string `json:"shipping"`
+	ID        uuid.UUID
+	CreatedAt time.Time
+	UpdatedAt time.Time
+	Users     string
+	Total     string
+	Discount  string
+	Payment   string
+	Shipping  string
+}
+
+type User struct {
+	ID          uuid.UUID
+	CreatedAt   time.Time
+	UpdatedAt   time.Time
+	UserOauthID string
+	Name        string
+	Email       string
 }

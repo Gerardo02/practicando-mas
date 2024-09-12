@@ -8,24 +8,26 @@ import (
 )
 
 type OAuth struct {
-	GoogleAuth oauth2.Config
+	Google oauth2.Config
 }
 
 // type Config struct {
 // 	GoogleLoginConfig oauth2.Config
 // }
 
-var AppConfig OAuth
-
 func NewAuth() *OAuth {
 	return &OAuth{
-		GoogleAuth: GoogleConfig(),
+		Google: GoogleConfig(),
 	}
 }
 
 func GoogleConfig() oauth2.Config {
-	AppConfig.GoogleAuth = oauth2.Config{
-		RedirectURL:  "http://localhost:8080/api/v1/auth/callback",
+	var appConfig OAuth
+
+	redirectURL := os.Getenv("URL_BACK") + "api/v1/auth/callback"
+
+	appConfig.Google = oauth2.Config{
+		RedirectURL:  redirectURL,
 		ClientID:     os.Getenv("GOOGLE_CLIENT_ID"),
 		ClientSecret: os.Getenv("GOOGLE_CLIENT_SECRET"),
 		Scopes: []string{
@@ -35,5 +37,5 @@ func GoogleConfig() oauth2.Config {
 		Endpoint: google.Endpoint,
 	}
 
-	return AppConfig.GoogleAuth
+	return appConfig.Google
 }
